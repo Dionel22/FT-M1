@@ -12,7 +12,7 @@ function BinarioADecimal(num) {
 function DecimalABinario(num) {
    var binario = '';
    while (num >= 1) {
-      binario = num % 2 + binario;
+      binario = num % 2 + binario;// lo concatena "1 <- 0 <- 0 <-1"
       num = Math.floor(num / 2);
    }
    return binario;
