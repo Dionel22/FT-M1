@@ -13,8 +13,10 @@ nuevoContador()     // 2
 const otroContador = counter()
 otroContador()      // 1
 otroContador()      // 2 */
+
+// 1 funcion retorna otra function <--Elaza-->  
 function counter() {
-  var count = 0;
+  var count = 0; //declaramos una variable en la funcion padre
   return function(){
     count++;
     return count;
@@ -51,7 +53,7 @@ var cache = {};
     if (cache.hasOwnProperty(arg)){ //si cache ahi un arg?
       return cache[arg];
     }
-    return cache[arg] = cb(arg)
+    return cache[arg] = cb(arg) // cb le damos el argumento 
   }
 }
 
