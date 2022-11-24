@@ -50,8 +50,8 @@ function cacheFunction(cb) {
 var cache = {};
 // cache {2, 6} aqui lo guarda
   return function (arg) { 
-    if (cache.hasOwnProperty(arg)){ //si cache ahi un arg?
-      return cache[arg];
+    if (cache.hasOwnProperty(arg)){ //si cache existe un arg?
+      return cache[arg];// bracket notation --> []
     }
     return cache[arg] = cb(arg) // cb le damos el argumento 
   }
@@ -89,14 +89,15 @@ let getNombreAlumno = getNombre.bind(alumno);
   Ejercicio 4
   Sin modificar la función crearCadena, usar bind para guardar, en las tres variables declaradas a continuación, tres funciones que retornen una cadena (string) y el delimitador especificado (asteriscos, guiones, y guiones bajos, respectivamente). Las funciones obtenidas deberían recibir solamente un argumento - la cadena de texto - ya que los otros argumentos habrán sido "bindeados". 
 */
+//bind--> function()
+//call--> value
 
 function crearCadena(delimitadorIzquierda, delimitadorDerecha, cadena) {
-  return delimitadorDerecha + cadena + delimitadorIzquierda;
-}
+  return delimitadorIzquierda+ cadena + delimitadorDerecha ;}
 
-let textoAsteriscos = crearCadena.bind(this, "*", "*");
-let textoGuiones = crearCadena.bind(this, "-", "-");
-let textoUnderscore = crearCadena.bind(this, "_", "_");
+let textoAsteriscos = crearCadena.bind(null, "*", "*"); // null es vacio
+let textoGuiones = crearCadena.bind(null, "-", "-");
+let textoUnderscore = crearCadena.bind(null, "_", "_");
 
 // No modifiquen nada debajo de esta linea
 // --------------------------------
