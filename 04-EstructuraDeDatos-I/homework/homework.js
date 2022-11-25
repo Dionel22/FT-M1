@@ -32,13 +32,20 @@ function nFibonacci(n) {
    // fib(2) = fib(1) + fib(0) = 1 + 0 = 1
    // fib(n) = fib(n -1) + fib(n -2)
 
-   if(n <= 1){ // caso base
+   if(n === 0){ // caso base
+      return n;
+   } else  if(n === 1){ // caso base
       return n;
    }
-   return nFibonacci(n -1) + nFibonacci(n -2); // caso recursivo
+
+   return nFibonacci(n -2) + nFibonacci(n -1); // caso recursivo
 }
 /* 
-   nFibonacci(n -1) + nFibonacci(n -2) ---> n = 3 + n = 2
+   nFibonacci(1)
+   nFibonacci(0)
+   nFibonacci(3) 
+   nFibonacci(2) <-- nFibonacci(0) + nFibonacci(1)
+   nFibonacci(4) --> nFibonacci(2) + nFibonacci(3) en pausa
 */
 
 
@@ -55,8 +62,8 @@ Pueden utilizar class o función constructora.
 function Queue() {
    this.queue = [];
 }
-
-Queue.prototype.enqueue = function (x) {
+// metodo quen son una function / molde
+Queue.prototype.enqueue = function (x) { // queue es una instancia
    return this.queue.push(x);
 }
 
@@ -67,6 +74,8 @@ Queue.prototype.dequeue = function () {
 Queue.prototype.size = function () {
    return this.queue.length;
 }
+
+// const ds = new Queue() es una intansia
 
 
 // No modifiquen nada debajo de esta linea
