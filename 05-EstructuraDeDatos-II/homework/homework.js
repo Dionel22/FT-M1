@@ -38,35 +38,37 @@ LinkedList.prototype.add = function (data) {
   }
     current.next = node1;// cuardamos node1 en next 
     this.length++;
-}
+};
 
 LinkedList.prototype.remove = function () {
 var current = this.head;// creamos una variable temporal donde guardaremos el valor actual de lista
-if(!current){//comprobamos que nuestra lista no este vacia
-  return this.head = null;// si la lista no esta vacia, guardamos en la cabeza con el valor null
+if(current === null){//comprobamos que nuestra lista no este vacia
+  return  null;// si la lista no esta vacia, retornamos null
 }
-  if(!current.next){// recorremos el current hasta encontra una cabeza que no este vacia
+  if(current.next === null){// recorremos el current hasta encontra una cabeza que no este vacia
     this.head = null;// guardamos en la cabeza con el valor null
     console.log(this.length--);//restamos el contador
     return current.value;// nos muestra el valor null
   }
  
-   while(current.next.next){// recorremos el current hasta encontra una cabeza que este en null
+   while(current.next.next !== null){// mientra sea distinto a null se corta ante del null
      current = current.next;//actualizamos nuestra variable con el siguiente node
       console.log(current);
    }    
-     var node2 = current.next.value; 
-      current.next = null;
+     var node2 = current.next.value; // guardamos el valor de la referencia
+      current.next = null;// elimina la ultima variable
       console.log(this.length--);
       return node2;
-}
+};
 
 LinkedList.prototype.search = function (input) {
-  var current = this.head;
-  if(!current){
-    this.head = null;
+  
+  if(this.length === 0){
+    return null;
   }
-  while(current){
+
+  let current = this.head;
+  while(current){// current es algo? si
     if(typeof input === "function"){
         if(input(current.value)=== true){
             return current.value;
@@ -77,7 +79,7 @@ LinkedList.prototype.search = function (input) {
     current = current.next;
   }
   return null;
-}
+};
 
 /* EJERCICIO 2
 Implementar la clase HashTable.
@@ -102,7 +104,7 @@ HashTable.prototype.hash = function (input) {
   for(let i = 0; i < input.length;i++){//recorre el string
       suma = suma + input.charCodeAt(i);// suma las letra del string con el metodo charCodeAt
   }
-  return suma % this.numBuckets;// le sacamos el resto para que se guarde
+  return suma % this.numBuckets;// le sacamos el resto para que se guarde nos da entre 0 a 34
 }
 
 // Metodo
@@ -112,18 +114,20 @@ HashTable.prototype.set = function(key, value){
   if(typeof key !== "string"){
     throw new TypeError("Keys must be strings")
   }
-  var indice = this.hash(key);// creamos una variable para guardar el valor
+  let indice = this.hash(key);// creamos una variable para guardar el valor
  if(this.buckets[indice] === undefined){// si en buckets es undefined 
     this.buckets[indice] = {};// guardo un objeto
  }
- return this.buckets[indice][key] = value; // guardo el valor y lo retorno
+  this.buckets[indice][key] = value; // guardo el valor y lo retorno
 };
 
 HashTable.prototype.get = function(key){
-  // creamos una instacia de hash con la variable index
-  var index = this.hash(key);
+  // creamos el index
+  let index = this.hash(key);
   // retornamos el valor de la key
-  return this.buckets[index][key];
+  if(this.buckets[index][key]){
+   return this.buckets[index][key]; 
+  }
 };
 
 
@@ -131,7 +135,10 @@ HashTable.prototype.hasKey = function(key){
     // creamos una instacia de hash con la variable index
   var index = this.hash(key);
   //retornamos true si en key esta el valor 
-  return this.buckets[index].hasOwnProperty(key);
+  if(this.buckets[index][key]){
+    return true; 
+   }
+   return false;
 };
 
 
