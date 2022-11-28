@@ -10,9 +10,73 @@ Implementar la clase LinkedList, definiendo los siguientes métodos:
   search(isEven), donde isEven es una función que retorna true cuando recibe por parámetro un número par, busca un nodo cuyo valor sea un número par.
   En caso de que la búsqueda no arroje resultados, search debe retornar null.
 */
-function LinkedList() {}
+function LinkedList() {
+  this.length = 0;
+  this.head = null;
+}
 
-function Node(value) {}
+function Node(value) {
+  this.value = value;
+  this.next = null;
+}
+
+//Metodo add, remove y search
+
+LinkedList.prototype.add = function (value) {
+  var node1 = new Node(value);
+  var current = this.head;
+  if(this.head === null){
+    this.head = node1;
+    this.length++;
+    return node1;
+  }
+  
+  while (current.next) {
+    current = current.next;
+  }
+    current.next = node1;
+    this.length++;
+}
+
+LinkedList.prototype.remove = function () {
+    
+  var current = this.head;
+if(!current){
+  return this.head = null;
+}
+  if(!current.next){
+    this.head = null;
+    console.log(this.length--);
+    return current.value;
+  }
+ 
+   while(current.next.next){    
+     current = current.next;
+      console.log(current);
+   }    
+     var node2 = current.next.value;   
+      current.next = null;
+      console.log(this.length--);
+      return node2;
+}
+
+LinkedList.prototype.search = function (input) {
+  var current = this.head;
+  if(!current){
+    this.head = null;
+  }
+  while(current){
+    if(typeof input === "function"){
+        if(input(current.value)=== true){
+            return current.value;
+        }
+    }if(input === current.value){
+        return current.value;
+    }
+    current = current.next;
+  }
+  return null;
+}
 
 /* EJERCICIO 2
 Implementar la clase HashTable.
@@ -27,7 +91,44 @@ La clase debe tener los siguientes métodos:
 
 Ejemplo: supongamos que quiero guardar {instructora: 'Ani'} en la tabla. Primero puedo chequear, con hasKey, si ya hay algo en la tabla con el nombre 'instructora'; luego, invocando set('instructora', 'Ani'), se almacenará el par clave-valor en un bucket específico (determinado al hashear la clave)
 */
-function HashTable() {}
+function HashTable() {
+  this.numBuckets = 35;
+  this.buckets = [];
+}
+
+HashTable.prototype.hash = function (input) {
+  var suma = 0; // declaramos un contador
+  for(let i = 0; i < input.length;i++){//recorre el string
+      suma = suma + input.charCodeAt(i);// suma las letra del string con el metodo charCodeAt
+  }
+  return suma % this.numBuckets;// le sacamos el resto para que se guarde
+}
+
+HashTable.prototype.set = function(key, value){
+ // preguntamos si key 
+  if(typeof key !== "string"){
+    throw new TypeError("Keys must be strings")
+  }
+  var indice = this.hash(key);
+ if(this.buckets[indice] === undefined){
+    this.buckets[indice] = {}
+ }
+ return this.buckets[indice][key] = value; 
+};
+
+HashTable.prototype.get = function(key){
+   var index = this.hash(key);
+  return this.buckets[index][key];
+};
+
+
+HashTable.prototype.hasKey = function(key){
+  var index = this.hash(key);
+  return this.buckets[index].hasOwnProperty(key);
+};
+
+
+
 
 // No modifiquen nada debajo de esta linea
 // --------------------------------
