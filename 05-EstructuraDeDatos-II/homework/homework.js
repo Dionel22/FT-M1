@@ -10,12 +10,12 @@ Implementar la clase LinkedList, definiendo los siguientes métodos:
   search(isEven), donde isEven es una función que retorna true cuando recibe por parámetro un número par, busca un nodo cuyo valor sea un número par.
   En caso de que la búsqueda no arroje resultados, search debe retornar null.
 */
-function LinkedList() {
+function LinkedList() {//tenemos la clase lista que tiene una (cabeza con valor null) y un (contador en 0)
   this.length = 0;
   this.head = null;
 }
 
-function Node(value) {
+function Node(value) {//tenemos la clase node con un valor  y  un next que es null
   this.value = value;
   this.next = null;
 }
@@ -23,38 +23,37 @@ function Node(value) {
 //Metodo add, remove y search
 
 LinkedList.prototype.add = function (value) {
-  var node1 = new Node(value);
-  var current = this.head;
-  if(this.head === null){
-    this.head = node1;
-    this.length++;
+  var node1 = new Node(value);// creamos la intancia de la clase Node en node1
+  var current = this.head;//creamos una variable temporal donde guardaremos el valor actual de node
+  if(!current){//comprobamos que nuestra lista no este vacia
+    this.head = node1;// si la lista esta vacia, guardamos en la cabeza el node
+    this.length++;// aumentamos el contador 1 por cada lista que agregamos
     return node1;
   }
   
-  while (current.next) {
-    current = current.next;
+  while (current.next) {// recorremos el current hasta encontra una cabeza que este en null
+    current = current.next;//actualizamos nuestra variable con el siguiente node
   }
-    current.next = node1;
+    current.next = node1;// cuardamos node1 en next 
     this.length++;
 }
 
 LinkedList.prototype.remove = function () {
-    
-  var current = this.head;
-if(!current){
-  return this.head = null;
+var current = this.head;// creamos una variable temporal donde guardaremos el valor actual de lista
+if(!current){//comprobamos que nuestra lista no este vacia
+  return this.head = null;// si la lista no esta vacia, guardamos en la cabeza con el valor null
 }
-  if(!current.next){
-    this.head = null;
-    console.log(this.length--);
-    return current.value;
+  if(!current.next){// recorremos el current hasta encontra una cabeza que no este vacia
+    this.head = null;// guardamos en la cabeza con el valor null
+    console.log(this.length--);//restamos el contador
+    return current.value;// nos muestra el valor null
   }
  
-   while(current.next.next){    
-     current = current.next;
+   while(current.next.next){// recorremos el current hasta encontra una cabeza que este en null
+     current = current.next;//actualizamos nuestra variable con el siguiente node
       console.log(current);
    }    
-     var node2 = current.next.value;   
+     var node2 = current.next.value; 
       current.next = null;
       console.log(this.length--);
       return node2;
@@ -104,26 +103,32 @@ HashTable.prototype.hash = function (input) {
   return suma % this.numBuckets;// le sacamos el resto para que se guarde
 }
 
+// Metodo
+
 HashTable.prototype.set = function(key, value){
- // preguntamos si key 
+ // preguntamos si key es un string, si no es que marque error 
   if(typeof key !== "string"){
     throw new TypeError("Keys must be strings")
   }
-  var indice = this.hash(key);
- if(this.buckets[indice] === undefined){
-    this.buckets[indice] = {}
+  var indice = this.hash(key);// creamos una variable para guardar el valor
+ if(this.buckets[indice] === undefined){// si en buckets es undefined 
+    this.buckets[indice] = {};// guardo un objeto
  }
- return this.buckets[indice][key] = value; 
+ return this.buckets[indice][key] = value; // guardo el valor y lo retorno
 };
 
 HashTable.prototype.get = function(key){
-   var index = this.hash(key);
+  // creamos una instacia de hash con la variable index
+  var index = this.hash(key);
+  // retornamos el valor de la key
   return this.buckets[index][key];
 };
 
 
 HashTable.prototype.hasKey = function(key){
+    // creamos una instacia de hash con la variable index
   var index = this.hash(key);
+  //retornamos true si en key esta el valor 
   return this.buckets[index].hasOwnProperty(key);
 };
 
