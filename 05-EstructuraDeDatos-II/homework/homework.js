@@ -33,7 +33,7 @@ LinkedList.prototype.add = function (data) {
     return node1;
   }
   
-  while (current.next) {// recorremos el current hasta encontra una cabeza que este en null
+  while (current.next !== null) {//si es diferente al null se sale
     current = current.next;//actualizamos nuestra variable con el siguiente node
   }
     current.next = node1;// cuardamos node1 en next 
