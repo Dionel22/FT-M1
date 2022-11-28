@@ -10,8 +10,10 @@ Implementar la clase LinkedList, definiendo los siguientes métodos:
   search(isEven), donde isEven es una función que retorna true cuando recibe por parámetro un número par, busca un nodo cuyo valor sea un número par.
   En caso de que la búsqueda no arroje resultados, search debe retornar null.
 */
+
+
 function LinkedList() {//tenemos la clase lista que tiene una (cabeza con valor null) y un (contador en 0)
-  this.length = 0;
+  this.length = 0; 
   this.head = null;
 }
 
@@ -22,8 +24,8 @@ function Node(value) {//tenemos la clase node con un valor  y  un next que es nu
 
 //Metodo add, remove y search
 
-LinkedList.prototype.add = function (value) {
-  var node1 = new Node(value);// creamos la intancia de la clase Node en node1
+LinkedList.prototype.add = function (data) {
+  var node1 = new Node(data);// creamos la intancia de la clase Node en node1
   var current = this.head;//creamos una variable temporal donde guardaremos el valor actual de node
   if(!current){//comprobamos que nuestra lista no este vacia
     this.head = node1;// si la lista esta vacia, guardamos en la cabeza el node
