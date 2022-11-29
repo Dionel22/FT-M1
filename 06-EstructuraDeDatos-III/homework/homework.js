@@ -11,8 +11,8 @@
 */
 function BinarySearchTree(value) {// clase
   this.value = value;
-  this.left = null;
-  this.right = null;
+  this.left = null;// referencia izquierda
+  this.right = null;//  referencia derecha
 } 
 
 BinarySearchTree.prototype.insert = function (data) {
@@ -32,59 +32,56 @@ BinarySearchTree.prototype.insert = function (data) {
      this.right = valor;// guardamos el valor en this.right
     }
    }
-    return false;
  };
 
  BinarySearchTree.prototype.size = function () {
-  if(!this.left && !this.right){return 1}// preguntamos si no ahi valor retorno 1
+  if(this.left === null && this.right=== null){return 1}// preguntamos si es null retorno 1
   if(this.left && this.right){return 1 + this.left.size() + this.right.size()}// preguntamos si ahi valor lo sumamos 1 de lado left y ringt y usamos la recurcion
-  if(this.left){return 1 + this.left.size()}// preguntamos si ahi valor en left lo sumamos 1
-  if(this.right){return 1 + this.right.size()}// preguntamos si ahi valor en ringht lo sumamos 1
+  if(!this.left){return 1 + this.right.size()}// preguntamos si ahi no ahi nada en left lo sumamos 1 en right
+  if(!this.right){return 1 +this.left.size() }// preguntamos si ahi no ahi nada en ringht lo sumamos 1 en left
 };
 
 BinarySearchTree.prototype.contains = function (data) {
   if(data === this.value)return true;
-  if(data < this.value){
-       if(!this.left){
-        return false;  
-      }    
-      return this.left.contains(data); 
-  } 
-  if(!this.right){
-    return false;  
-  }
-  return this.right.contains(data); 
-};
-
-BinarySearchTree.prototype.depthFirstForEach = function (cb, orden = "in-order") {
-  if(orden === "pre-order"){
-      cb(this.value)
-      if (this.left) { this.left.depthFirstForEach(cb, orden);}
-      if(this.right){ this.right.depthFirstForEach(cb, orden);}
-  }else{
-  if(orden === "in-order" || orden === undefined){
-      if(this.left){ this.left.depthFirstForEach(cb, orden);}
-      cb(this.value);
-      if(this.right){ this.right.depthFirstForEach(cb, orden);}
-  }
-  if (orden === "post-order") {
-      if(this.left){ this.left.depthFirstForEach(cb, orden);}
-      if(this.right){ this.right.depthFirstForEach(cb, orden);}
-      cb(this.value);
-  }
+  if(data >= this.value){
+   if(!this.right){return false;}
+   return this.right.contains(data);
+  }else{     
+    if(!this.left){return false;}    
+    return this.left.contains(data);
   }
 };
 
-BinarySearchTree.prototype.breadthFirstForEach = function (cb, array = []) {
+BinarySearchTree.prototype.depthFirstForEach = function (cb, orden) {
+  //in orden
+  if(orden === undefined || orden === "in-order"){
+      this.left && this.left.depthFirstForEach(cb, orden);
+  cb(this.value);  
+  this.right && this.right.depthFirstForEach(cb, orden);
+  }else if(orden === "post-order"){
+    //post orden
+  this.left && this.left.depthFirstForEach(cb, orden);
+  this.right && this.right.depthFirstForEach(cb, orden);
   cb(this.value);
+  }else{
+    //pre orden
+  cb(this.value); 
+  this.left && this.left.depthFirstForEach(cb, orden);
+  this.right && this.right.depthFirstForEach(cb, orden);
+  }
+
+};
+
+BinarySearchTree.prototype.breadthFirstForEach = function (cb, array = []) {//aaray guarda los datos si perdelo por la recucividad
+ 
   if(this.left){
       array.push(this.left);
   }
   if (this.right) {
       array.push(this.right);
-  }
+  } cb(this.value);
   if(array.length > 0){
-      array.shift().breadthFirstForEach(cb, array);
+      array.shift().breadthFirstForEach(cb, array);// saca el primero ojecto
   }
 };
 
